@@ -1,13 +1,19 @@
 import {Component} from 'react'
 import Header from '../Header'
+import UserStories from '../UserStories'
+import UserPosts from '../UserPosts'
 import './index.css'
 
 class Home extends Component {
   render() {
     return (
-      <div className="home-container">
+      <>
         <Header />
-      </div>
+        <div className="home-container">
+          <UserStories />
+          <UserPosts />
+        </div>
+      </>
     )
   }
 }

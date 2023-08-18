@@ -17,19 +17,19 @@ class LoginForm extends Component {
   onSubmitSuccess = jwtToken => {
     const {history} = this.props
 
-    Cookies.set('jwt_token', jwtToken, {expires: 30, path: '/'})
+    Cookies.set('jwt_token', jwtToken, {expires: 30})
     history.replace('/')
   }
 
   onSubmitFailure = errorMsg => {
-    console.log(errorMsg)
     this.setState({showSubmitError: true, errorMsg})
   }
 
-  onSubmit = async event => {
+  submitForm = async event => {
     event.preventDefault()
     const {username, password} = this.state
     const userDetails = {username, password}
+
     const url = 'https://apis.ccbp.in/login'
     const options = {
       method: 'POST',
@@ -38,6 +38,7 @@ class LoginForm extends Component {
 
     const response = await fetch(url, options)
     const data = await response.json()
+    console.log(data)
     if (response.ok === true) {
       this.onSubmitSuccess(data.jwt_token)
     } else {
@@ -75,7 +76,7 @@ class LoginForm extends Component {
               type="text"
               id="username"
               className="username-input-field"
-              placeholder="Username:rahul"
+              placeholder="Username"
               value={username}
               onChange={this.onChangeUserName}
             />
@@ -88,7 +89,7 @@ class LoginForm extends Component {
               type="password"
               id="password"
               className="password-input-field"
-              placeholder="Password:rahul@2021"
+              placeholder="Password"
               value={password}
               onChange={this.onChangePassword}
             />

@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import {Link, withRouter} from 'react-router-dom'
-
+import Cookies from 'js-cookie'
 import {FaSearch} from 'react-icons/fa'
 import {GiHamburgerMenu} from 'react-icons/gi'
 import {IoCloseCircle} from 'react-icons/io5'
@@ -16,6 +16,12 @@ class Header extends Component {
 
   onClickShowSearch = () => {
     this.setState({showSearchBar: true})
+  }
+
+  onClickLogout = () => {
+    const {history} = this.props
+    Cookies.remove('jwt_token')
+    history.replace('/login')
   }
 
   render() {
@@ -48,7 +54,11 @@ class Header extends Component {
                 <li>profile</li>
               </Link>
             </ul>
-            <button type="button" className="logout_button">
+            <button
+              type="button"
+              className="logout_button"
+              onClick={this.onClickLogout}
+            >
               Logout
             </button>
           </div>

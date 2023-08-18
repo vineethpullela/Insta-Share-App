@@ -1,7 +1,10 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
+
 import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 import './index.css'
 
@@ -48,6 +51,10 @@ class UserStories extends Component {
     }
   }
 
+  onClickRetryAgain = () => {
+    this.getStoryData()
+  }
+
   renderLoaderView = () => (
     <div className="user_story_loader_container">
       <Loader type="TailSpin" color="#4094EF" height={50} width={50} />
@@ -62,9 +69,13 @@ class UserStories extends Component {
         className="user_story_failure_img"
       />
       <h1 className="failure-heading">
-        Something went worng. Please try again
+        Something went wrong. Please try again
       </h1>
-      <button type="button" className="failure_button">
+      <button
+        type="button"
+        className="failure_button"
+        onClick={this.onClickRetryAgain}
+      >
         Try Again
       </button>
     </div>
@@ -73,21 +84,66 @@ class UserStories extends Component {
   renderSuccessView = () => {
     const {storiesList} = this.state
 
+    const settings = {
+      dots: false,
+      infinite: false,
+      slidesToShow: 8,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 1300,
+          settings: {
+            slidesToShow: 8,
+          },
+        },
+        {
+          breakpoint: 1200,
+          settings: {
+            slidesToShow: 7,
+          },
+        },
+        {
+          breakpoint: 1100,
+          settings: {
+            slidesToShow: 6,
+          },
+        },
+        {
+          breakpoint: 900,
+          settings: {
+            slidesToShow: 5,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 4,
+          },
+        },
+        {
+          breakpoint: 512,
+          settings: {
+            slidesToShow: 3,
+          },
+        },
+      ],
+    }
+
     return (
-      <ul className="slider-container">
-        <Slider>
+      <div className="slider-container">
+        <Slider {...settings}>
           {storiesList.map(eachStory => (
-            <li key={eachStory.userId} className="story-container">
+            <div key={eachStory.userId} className="story-container">
               <img
                 src={eachStory.storyUrl}
-                alt="user story"
+                alt={eachStory.userName}
                 className="story-img"
               />
               <p className="user_name">{eachStory.userName}</p>
-            </li>
+            </div>
           ))}
         </Slider>
-      </ul>
+      </div>
     )
   }
 
